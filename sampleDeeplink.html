@@ -1,386 +1,507 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zelle&reg; | Find Your Bank</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --zelle-purple: #6D1ED4;
-    --zelle-purple-dark: #5A17B0;
-    --zelle-footer: #4B1091;
-  }
-  html, body { height: 100%; }
-  body {
-    font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
-    background: var(--zelle-purple);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PNC together with Zelle&reg;</title>
+  <style>
+    :root {
+      --pnc-orange: #ee7623;
+      --pnc-blue: #003087;
+      --dark-1: #2b333b;
+      --dark-2: #1f2730;
+      --zelle-purple: #6d1ed4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      color: #222;
+      background: #fff;
+    }
 
-  /* Header */
-  .top-bar {
-    background: var(--zelle-purple);
-    padding: 22px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .top-bar .inner {
-    width: 100%;
-    max-width: 1040px;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    gap: 22px;
-  }
-  .zelle-logo {
-    font-weight: 800;
-    font-size: 34px;
-    letter-spacing: -1px;
-    font-style: italic;
-    color: #fff;
-  }
-  .zelle-logo sup { font-size: 12px; font-style: normal; top: -14px; }
-  .divider { width: 1px; height: 36px; background: rgba(255,255,255,0.45); }
-  .page-title { font-size: 30px; font-weight: 400; }
+    /* ---------- Top nav bar ---------- */
+    .topbar {
+      background: var(--dark-1);
+      display: flex;
+      align-items: stretch;
+      height: 72px;
+      padding: 0 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-right: 32px;
+    }
+    .brand .logo {
+      width: 34px; height: 34px;
+      background: var(--pnc-orange);
+      border-radius: 50%;
+      position: relative;
+      display: inline-block;
+    }
+    .brand .logo::after {
+      content: "";
+      position: absolute;
+      top: 50%; left: 54%;
+      transform: translate(-50%, -50%);
+      border-left: 11px solid #fff;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+    }
+    .brand .name {
+      color: #fff;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .main-nav {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+    }
+    .main-nav a {
+      display: flex;
+      align-items: center;
+      padding: 0 22px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .main-nav a.active {
+      background: var(--dark-2);
+      border-top: 4px solid var(--pnc-orange);
+    }
+    .top-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .top-right a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .top-right .globe { opacity: .9; }
 
-  /* Main */
-  .main {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 36px 24px 60px;
-  }
-  .search-wrap {
-    width: 100%;
-    max-width: 1040px;
-    position: relative;
-    margin-bottom: 70px;
-  }
-  .search-box {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.6);
-    color: #fff;
-    font-size: 26px;
-    padding: 10px 10px 14px 48px;
-    outline: none;
-    font-family: inherit;
-  }
-  .search-box::placeholder { color: rgba(255,255,255,0.75); }
-  .search-icon {
-    position: absolute;
-    left: 6px; top: 8px;
-    width: 26px; height: 26px;
-    border: 3px solid rgba(255,255,255,0.85);
-    border-radius: 50%;
-  }
-  .search-icon::after {
-    content: "";
-    position: absolute;
-    width: 3px; height: 12px;
-    background: rgba(255,255,255,0.85);
-    transform: rotate(-45deg);
-    right: -7px; bottom: -8px;
-    border-radius: 2px;
-  }
+    /* ---------- Sub nav bar ---------- */
+    .subbar {
+      background: var(--dark-2);
+      display: flex;
+      align-items: center;
+      height: 64px;
+      padding: 0 24px;
+    }
+    .subbar .links { display: flex; gap: 30px; }
+    .subbar .links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .subbar .right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 34px;
+    }
+    .subbar .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+    .subbar .search svg { width: 18px; height: 18px; }
+    .signon {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: var(--dark-1);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .5px;
+      padding: 10px 18px;
+      border-radius: 2px;
+    }
+    .signon .avatar {
+      width: 16px; height: 16px;
+      border: 2px solid var(--dark-1);
+      border-radius: 50%;
+      position: relative;
+    }
+    .signon .avatar::after {
+      content: "";
+      position: absolute;
+      bottom: -5px; left: 50%;
+      transform: translateX(-50%);
+      width: 14px; height: 8px;
+      border: 2px solid var(--dark-1);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+    }
 
-  /* Results dropdown */
-  .results {
-    position: absolute;
-    top: 64px; left: 0; right: 0;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    overflow: hidden;
-    display: none;
-    z-index: 5;
-  }
-  .results.show { display: block; }
-  .result-item {
-    padding: 16px 22px;
-    color: #2b2b2b;
-    font-size: 18px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
-    transition: background 0.15s;
-  }
-  .result-item:last-child { border-bottom: none; }
-  .result-item:hover { background: #f3edfb; }
-  .no-result {
-    padding: 16px 22px; color: #777; font-size: 16px; font-style: italic;
-  }
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      min-height: 520px;
+      background:
+        linear-gradient(120deg, rgba(0,0,0,.12), rgba(0,0,0,.05)),
+        linear-gradient(135deg, #c9b79c 0%, #b7cdd6 48%, #8fa7ae 100%);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      /* wooden table hint on the right */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 78% 30%, rgba(120,78,40,.55), transparent 40%),
+        radial-gradient(ellipse at 90% 70%, rgba(90,58,30,.5), transparent 45%);
+    }
+    .hero-inner {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 40px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
 
-  .hero { text-align: center; max-width: 1040px; }
-  .hero h1 { font-size: 64px; font-weight: 400; margin-bottom: 36px; }
-  .hero p {
-    font-size: 19px; line-height: 1.6; max-width: 1020px;
-    margin: 0 auto 40px; color: rgba(255,255,255,0.95);
-  }
-  .learn-more {
-    background: rgba(255,255,255,0.18);
-    color: #fff; border: none;
-    padding: 16px 34px; border-radius: 4px;
-    font-size: 14px; letter-spacing: 1px; font-weight: 600;
-    cursor: pointer; text-transform: uppercase;
-  }
+    .promo-card {
+      background: rgba(248, 248, 248, .96);
+      border-radius: 14px;
+      padding: 48px 52px;
+      max-width: 600px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+    }
+    .promo-head {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .promo-head .pnc {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .promo-head .pnc .logo {
+      width: 40px; height: 40px;
+      background: var(--pnc-orange);
+      border-radius: 50%;
+      position: relative;
+    }
+    .promo-head .pnc .logo::after {
+      content: "";
+      position: absolute;
+      top: 50%; left: 54%;
+      transform: translate(-50%, -50%);
+      border-left: 13px solid #fff;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+    }
+    .promo-head .pnc .txt {
+      color: var(--pnc-blue);
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .promo-head .together {
+      color: #444;
+      font-size: 22px;
+    }
+    .promo-head .zelle {
+      color: var(--zelle-purple);
+      font-size: 40px;
+      font-weight: 800;
+      font-style: italic;
+      letter-spacing: -1px;
+    }
+    .promo-rule {
+      width: 120px; height: 3px;
+      background: var(--pnc-orange);
+      margin: 10px 0 26px;
+    }
+    .promo-card p {
+      font-size: 32px;
+      line-height: 1.3;
+      color: #333;
+      text-align: center;
+    }
+    .promo-card p sup a {
+      font-size: 15px;
+      color: var(--pnc-blue);
+      text-decoration: none;
+      vertical-align: super;
+    }
 
-  /* Footer */
-  .footer {
-    flex-shrink: 0;
-    background: var(--zelle-footer);
-    padding: 36px 24px 50px;
-  }
-  .footer .inner { max-width: 1040px; margin: 0 auto; }
-  .footer-top { display: flex; align-items: center; gap: 34px; flex-wrap: wrap; margin-bottom: 26px; }
-  .footer-top .zelle-logo { font-size: 26px; }
-  .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
-  .footer-links a { color: #fff; text-decoration: none; font-size: 15px; }
-  .footer-social { margin-left: auto; display: flex; gap: 16px; font-size: 18px; }
-  .footer-social span { opacity: 0.9; }
-  .footer small { display: block; color: rgba(255,255,255,0.8); font-size: 12.5px; line-height: 1.7; margin-top: 14px; }
+    /* ---------- Phone mockup ---------- */
+    .phone {
+      width: 240px;
+      height: 490px;
+      background: #0d0d0d;
+      border-radius: 36px;
+      padding: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .phone .screen {
+      background: #fff;
+      border-radius: 26px;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .phone .statusbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #111;
+    }
+    .phone .statusbar .icons { letter-spacing: 2px; }
+    .phone .appbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 6px 16px 12px;
+      font-size: 13px;
+      color: #333;
+      border-bottom: 1px solid #eee;
+    }
+    .phone .appbar .close {
+      position: absolute;
+      right: 16px;
+      color: #666;
+      font-size: 16px;
+    }
+    .phone .content {
+      padding: 16px;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .phone .zelle-logo {
+      color: var(--zelle-purple);
+      font-size: 26px;
+      font-weight: 800;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .phone .illus {
+      background: #dbe9f2;
+      border-radius: 10px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .phone .illus svg { width: 90px; height: 70px; }
+    .phone .content p {
+      font-size: 11px;
+      line-height: 1.5;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .phone .content p.sub { color: #777; }
+    .phone .dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin: 8px 0 14px;
+    }
+    .phone .dots span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #ccc;
+    }
+    .phone .dots span.active { background: var(--zelle-purple); }
+    .phone .get-started {
+      background: #0b63c5;
+      color: #fff;
+      border: none;
+      padding: 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: auto;
+    }
+    .phone .maybe {
+      color: #0b63c5;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
 
-  /* Modal */
-  .overlay {
-    position: fixed; inset: 0;
-    background: rgba(40, 10, 70, 0.72);
-    display: none;
-    align-items: center; justify-content: center;
-    padding: 20px; z-index: 50;
-  }
-  .overlay.show { display: flex; }
-  .modal {
-    background: #fff;
-    width: 100%; max-width: 515px;
-    border-radius: 2px;
-    overflow: hidden;
-    color: #1b1b1b;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    animation: pop 0.18s ease-out;
-  }
-  @keyframes pop { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  .modal-header {
-    background: var(--zelle-purple);
-    color: #fff;
-    text-align: center;
-    font-size: 34px;
-    padding: 26px 20px;
-    position: relative;
-  }
-  .modal-close {
-    position: absolute; top: 12px; right: 18px;
-    background: none; border: none; color: #fff;
-    font-size: 26px; cursor: pointer; line-height: 1;
-  }
-  .modal-body { padding: 34px 40px 40px; text-align: center; }
-  .bank-logo { margin: 6px 0 26px; display: flex; justify-content: center; align-items: center; }
+    /* ---------- Footer anchor nav ---------- */
+    .anchor-nav {
+      background: #fff;
+      border-top: 1px solid #e3e3e3;
+      border-bottom: 1px solid #e3e3e3;
+    }
+    .anchor-nav .inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 56px;
+      padding: 26px 24px;
+      flex-wrap: wrap;
+    }
+    .anchor-nav a {
+      color: #333;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    .anchor-nav a:hover { color: var(--pnc-orange); }
 
-  /* TD Bank logo */
-  .td-logo { display: inline-flex; align-items: center; gap: 10px; }
-  .td-box {
-    background: #4caf3f; color: #fff; font-weight: 800;
-    font-size: 26px; padding: 6px 10px; border-radius: 3px; letter-spacing: 1px;
-  }
-  .td-text { color: #1d5631; font-weight: 800; font-size: 28px; }
-
-  /* PNC logo */
-  .pnc-logo { display: inline-flex; align-items: center; gap: 10px; }
-  .pnc-mark {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: #f58025; display: inline-flex; align-items: center; justify-content: center;
-  }
-  .pnc-mark svg { width: 26px; height: 26px; }
-  .pnc-text { color: #00558c; font-weight: 800; font-size: 32px; letter-spacing: 1px; }
-
-  .modal-body h2 { font-size: 23px; font-weight: 800; line-height: 1.35; margin-bottom: 22px; color: #111; }
-  .modal-body .whats-next { font-weight: 800; font-size: 17px; margin-bottom: 14px; }
-  .modal-body ol { text-align: left; margin: 0 auto; max-width: 400px; padding-left: 20px; }
-  .modal-body ol li { font-size: 16px; line-height: 1.5; margin-bottom: 10px; }
-  .modal-body p.desc { font-size: 18px; line-height: 1.55; margin-bottom: 20px; color: #222; }
-  .modal-body p.fineprint { font-size: 13px; line-height: 1.6; color: #555; margin-bottom: 28px; }
-  .continue-btn {
-    width: 100%;
-    background: var(--zelle-purple);
-    color: #fff; border: none;
-    padding: 20px; font-size: 17px; font-weight: 700;
-    letter-spacing: 1px; text-transform: uppercase;
-    cursor: pointer; border-radius: 2px;
-  }
-  .continue-btn:hover { background: var(--zelle-purple-dark); }
-</style>
+    @media (max-width: 900px) {
+      .main-nav, .subbar .links, .top-right { display: none; }
+      .promo-card p { font-size: 24px; }
+      .promo-head { flex-wrap: wrap; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="top-bar">
-    <div class="inner">
-      <span class="zelle-logo">zelle<sup>&reg;</sup></span>
-      <span class="divider"></span>
-      <span class="page-title">Find Your Bank</span>
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo"></span>
+      <span class="name">PNC</span>
+    </div>
+    <nav class="main-nav">
+      <a href="#" class="active">Personal</a>
+      <a href="#">Small Business</a>
+      <a href="#">Corporate &amp; Institutional</a>
+      <a href="#">About</a>
+    </nav>
+    <div class="top-right">
+      <a href="#" class="globe">&#127760; Espa&ntilde;ol</a>
+      <a href="#">Customer Service</a>
+      <a href="#">Locations</a>
+      <a href="#">Security</a>
     </div>
   </header>
 
-  <!-- Main -->
-  <main class="main">
-    <div class="search-wrap">
-      <span class="search-icon"></span>
-      <input type="text" id="search" class="search-box" placeholder="Search" autocomplete="off" />
-      <div class="results" id="results"></div>
+  <!-- Sub navigation -->
+  <nav class="subbar">
+    <div class="links">
+      <a href="#">Products &amp; Services</a>
+      <a href="#">Learning</a>
+      <a href="#">Support</a>
+      <a href="#">Offers</a>
     </div>
-
-    <section class="hero">
-      <h1>What is Zelle<sup style="font-size:26px">&reg;</sup>?</h1>
-      <p>Zelle&reg; is a fast, safe and easy way to send and receive money directly between almost any bank accounts in the U.S., typically within minutes.1 With just an email address or U.S. mobile phone number, you can send money to and receive money from friends, family and others you trust.</p>
-      <button class="learn-more">Learn More</button>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="inner">
-      <div class="footer-top">
-        <span class="zelle-logo">zelle<sup>&reg;</sup></span>
-        <nav class="footer-links">
-          <a href="#">Contact Us</a>
-          <a href="#">Partners</a>
-          <a href="#">Press</a>
-          <a href="#">Legal</a>
-          <a href="#">Your Privacy Rights</a>
-        </nav>
-        <div class="footer-social">
-          <span>&#120143;</span><span>&#9673;</span><span>&#9632;</span><span>&#9654;</span><span>in</span>
-        </div>
+    <div class="right">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="16.5" y1="16.5" x2="21" y2="21" />
+        </svg>
+        <span>SEARCH</span>
       </div>
-      <small>1Must have a bank account in the U.S. to use Zelle&reg;. Transactions typically occur in minutes when the recipient's email address or U.S. mobile number is already enrolled with Zelle&reg;.</small>
-      <small>&copy;2026 Early Warning Services, LLC. All rights reserved. Zelle and the Zelle related marks are property of Early Warning Services, LLC. Other product and company names mentioned herein are the property of their respective owners.</small>
+      <div class="signon">
+        <span class="avatar"></span>
+        <span>SIGN ON</span>
+      </div>
     </div>
-  </footer>
+  </nav>
 
-  <!-- TD Bank Modal -->
-  <div class="overlay" id="tdOverlay">
-    <div class="modal">
-      <div class="modal-header">
-        Great News!
-        <button class="modal-close" data-close>&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="bank-logo">
-          <span class="td-logo">
-            <span class="td-box">TD</span>
-            <span class="td-text">Bank</span>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="promo-card">
+        <div class="promo-head">
+          <span class="pnc">
+            <span class="logo"></span>
+            <span class="txt">PNC</span>
           </span>
+          <span class="together">together with</span>
+          <span class="zelle">Zelle</span>
         </div>
-        <h2>TD Bank N.A. offers Zelle&reg; QR codes, simply scan in your banking app to pay.</h2>
-        <div class="whats-next">What's next?</div>
-        <ol>
-          <li>Close your browser</li>
-          <li>Open and log into your banking app</li>
-          <li>Go to "Send money with Zelle&reg;", tap the "QR Code" icon to scan and send money.</li>
-        </ol>
+        <div class="promo-rule"></div>
+        <p>
+          With Zelle&reg; in the PNC Mobile app, you can easily send and
+          receive money with people you know and trust.<sup><a href="#">[1,2]</a></sup>
+        </p>
       </div>
-    </div>
-  </div>
 
-  <!-- PNC Bank Modal -->
-  <div class="overlay" id="pncOverlay">
-    <div class="modal">
-      <div class="modal-header">
-        Great News!
-        <button class="modal-close" data-close>&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="bank-logo">
-          <span class="pnc-logo">
-            <span class="pnc-mark">
-              <svg viewBox="0 0 24 24" fill="none">
-                <polygon points="7,5 7,19 18,12" fill="#fff"/>
+      <!-- Phone mockup -->
+      <div class="phone">
+        <div class="screen">
+          <div class="statusbar">
+            <span>9:41</span>
+            <span class="icons">&#9679;&#9679;&#9679; &#128246; &#128267;</span>
+          </div>
+          <div class="appbar">
+            <span>Enroll With Zelle&reg;</span>
+            <span class="close">&times;</span>
+          </div>
+          <div class="content">
+            <div class="zelle-logo">Zelle</div>
+            <div class="illus">
+              <svg viewBox="0 0 90 70" fill="none">
+                <circle cx="28" cy="24" r="10" fill="#f4a261" />
+                <circle cx="62" cy="24" r="10" fill="#4a7fa5" />
+                <rect x="14" y="40" width="28" height="18" rx="4" fill="#4a7fa5" />
+                <rect x="48" y="40" width="28" height="18" rx="4" fill="#f4a261" />
+                <rect x="30" y="52" width="30" height="6" rx="3" fill="#8ab0c4" />
               </svg>
-            </span>
-            <span class="pnc-text">PNC</span>
-          </span>
+            </div>
+            <p>
+              With Zelle&reg;, it's fast, easy and free to send and receive
+              money with people you know and trust, here in the PNC app.
+            </p>
+            <p class="sub">
+              Zelle&reg; is used by millions of people in over 2,200 banking
+              apps in the U.S.
+            </p>
+            <div class="dots">
+              <span class="active"></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <button class="get-started">Get Started</button>
+            <div class="maybe">Maybe Later</div>
+          </div>
         </div>
-        <h2>PNC Bank offers Zelle QR Codes.</h2>
-        <p class="desc">To continue sending money with Zelle QR Code, just log into your banking app. It's that simple.</p>
-        <p class="fineprint">By selecting "Continue to your bank", you will be taken to an external interface with different privacy and information security policy. Zelle&reg; is not responsible for and does not endorse the products, services or content that is offered or expressed.</p>
-        <button class="continue-btn" id="pncContinue">Continue to your bank</button>
       </div>
     </div>
-  </div>
+  </section>
 
-  <script>
-    var BANKS = [
-      { name: "TD Bank N.A.", modal: "tdOverlay" },
-      { name: "PNC Bank", modal: "pncOverlay" }
-    ];
+  <!-- Anchor navigation -->
+  <nav class="anchor-nav">
+    <div class="inner">
+      <a href="#">Get Started</a>
+      <a href="#">Zelle&reg; Fast Facts</a>
+      <a href="#">Zelle&reg; Guide</a>
+      <a href="#">Zelle&reg; Features</a>
+      <a href="#">Zelle&reg; Safety</a>
+      <a href="#">More Resources</a>
+    </div>
+  </nav>
 
-    var searchEl = document.getElementById("search");
-    var resultsEl = document.getElementById("results");
-
-    function renderResults(query) {
-      var q = query.trim().toLowerCase();
-      if (q === "") { resultsEl.classList.remove("show"); resultsEl.innerHTML = ""; return; }
-
-      var matches = BANKS.filter(function (b) { return b.name.toLowerCase().indexOf(q) !== -1; });
-      resultsEl.innerHTML = "";
-
-      if (matches.length === 0) {
-        var none = document.createElement("div");
-        none.className = "no-result";
-        none.textContent = "No banks found";
-        resultsEl.appendChild(none);
-      } else {
-        matches.forEach(function (b) {
-          var item = document.createElement("div");
-          item.className = "result-item";
-          item.textContent = b.name;
-          item.addEventListener("click", function () {
-            openModal(b.modal);
-            resultsEl.classList.remove("show");
-          });
-          resultsEl.appendChild(item);
-        });
-      }
-      resultsEl.classList.add("show");
-    }
-
-    searchEl.addEventListener("input", function (e) { renderResults(e.target.value); });
-
-    function openModal(id) { document.getElementById(id).classList.add("show"); }
-    function closeModals() {
-      document.querySelectorAll(".overlay").forEach(function (o) { o.classList.remove("show"); });
-    }
-
-    document.querySelectorAll("[data-close]").forEach(function (btn) {
-      btn.addEventListener("click", closeModals);
-    });
-    document.querySelectorAll(".overlay").forEach(function (ov) {
-      ov.addEventListener("click", function (e) { if (e.target === ov) closeModals(); });
-    });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModals(); });
-
-    document.getElementById("pncContinue").addEventListener("click", function () {
-      var dataParam = "eyJuYW1lIjoiVGF3bnkiLCJ0b2tlbiI6ImZpa3ZhQGZpc2Vydi5jb20ifQ==";
-      var httpsUrl = "https://gowtham-fiserv.github.io/zellesdk-deeplinking/sampleDeeplink.html?data=" + dataParam;
-
-      if (/android/i.test(navigator.userAgent)) {
-        // Force the browser to hand off to the FI app via an explicit intent.
-        // If the app is not installed, Chrome loads the browser_fallback_url instead.
-        var intentUrl =
-          "intent://gowtham-fiserv.github.io/zellesdk-deeplinking/sampleDeeplink.html?data=" + dataParam +
-          "#Intent;scheme=https;package=com.fiserv.dps.mobile.sdk.FIAppTest;" +
-          "S.browser_fallback_url=" + encodeURIComponent(httpsUrl) + ";end";
-        window.location.href = intentUrl;
-      } else {
-        window.location.href = httpsUrl;
-      }
-    });
-  </script>
 </body>
 </html>
