@@ -366,7 +366,20 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModals(); });
 
     document.getElementById("pncContinue").addEventListener("click", function () {
-      window.location.href = "https://gowtham-fiserv.github.io/.well-known/sampleDeeplink.html?data=eyJuYW1lIjoiVGF3bnkiLCJ0b2tlbiI6ImZpa3ZhQGZpc2Vydi5jb20ifQ==";
+      var dataParam = "eyJuYW1lIjoiVGF3bnkiLCJ0b2tlbiI6ImZpa3ZhQGZpc2Vydi5jb20ifQ==";
+      var httpsUrl = "https://gowtham-fiserv.github.io/zellesdk-deeplinking/sampleDeeplink.html?data=" + dataParam;
+
+      if (/android/i.test(navigator.userAgent)) {
+        // Force the browser to hand off to the FI app via an explicit intent.
+        // If the app is not installed, Chrome loads the browser_fallback_url instead.
+        var intentUrl =
+          "intent://gowtham-fiserv.github.io/zellesdk-deeplinking/sampleDeeplink.html?data=" + dataParam +
+          "#Intent;scheme=https;package=com.fiserv.dps.mobile.sdk.FIAppTest;" +
+          "S.browser_fallback_url=" + encodeURIComponent(httpsUrl) + ";end";
+        window.location.href = intentUrl;
+      } else {
+        window.location.href = httpsUrl;
+      }
     });
   </script>
 </body>
